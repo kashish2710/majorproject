@@ -1,0 +1,72 @@
+<% layout('/layouts/boilerplate') -%>
+<body>
+    <h2>EDIT YOUR LISTING</h2>
+    <div class="row">
+        <div class="col-8 offset-2">
+    <form method="post" action="/listings/<%=listing._id%>?_method=PUT"  novalidate class="needs-validation">
+        <div class="mb-3">
+             <label for="title" class="form-label">Title</label>
+             <input  value="<%=listing.title%>" name="title" class="form-control" required>
+             <div class=invalid-feedback>Title should be correct</div>
+        </div>
+
+        <div class="mb-3">
+           <label  for="description" class="form-label">Description</label>
+           <textarea rows="10" name="description" class="form-control" required> <%=listing.description%> </textarea>
+           <div class=invalid-feedback>Write Description </div>
+        </div>
+       
+        <div class="mb-3">
+            <label for="image" class="form-label">Image link</label>
+           <input value="<%=listing.image%>" name="image" class="form-control">
+           
+        </div>
+
+
+        <div class="row">
+         <div class="mb-3 col-md-4">
+          <div class=" mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input value="<%=listing.price%>" name="price" class="form-control" required>
+            <div class=invalid-feedback>Price should be correct</div>
+          </div>
+          </div>
+          <div class="mb-3 col-md-8">
+            <div class=" mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input value="<%=listing.location%>"name=location class="form-control" required>
+            <div class=invalid-feedback>Location should be correct</div>
+             </div>
+          </div>
+        
+
+        </div>
+  
+   
+        
+        <button class="btn btn-dark">Edit</button>
+    </form>
+        </div>
+    </div>
+<script >
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
+</body>
