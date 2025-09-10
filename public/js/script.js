@@ -1,4 +1,3 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
 (() => {
   'use strict'
 
@@ -17,3 +16,29 @@
     }, false)
   })
 })()
+  const stars = document.querySelectorAll('#starRating span');
+  const ratingInput = document.getElementById('ratingInput');
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      const selectedRating = parseInt(star.getAttribute('data-value'));
+      ratingInput.value = selectedRating;  // ⭐️ Hidden input gets this value
+
+      // Fill stars according to selected rating
+      stars.forEach(s => {
+        const sVal = parseInt(s.getAttribute('data-value'));
+        if (sVal <= selectedRating) {
+          s.textContent = '★';
+          s.classList.add('filled');
+        } else {
+          s.textContent = '☆';
+          s.classList.remove('filled');
+        }
+      });
+    });
+  });
+
+  // Prevent submit if no star selected
+  document.querySelector('form').addEventListener('submit', function (e) {
+
+  });

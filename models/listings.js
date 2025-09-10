@@ -1,5 +1,7 @@
 const mongoose=require("mongoose");
 const Schema=mongoose.Schema;
+const Review = require("./review"); 
+const User = require("./user"); 
 const listingSchema=new Schema({
     title:{
         type:String,
@@ -10,16 +12,25 @@ const listingSchema=new Schema({
         required:true
     },
     image:{
-        type:String,
-        default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97F2WfGZaV7qDBAZGKFGL_R4w_UAR-EiZ2A&s",
-        set:(v)=>v===""? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97F2WfGZaV7qDBAZGKFGL_R4w_UAR-EiZ2A&s":v
+       url:String,
+       filename:String
     },
     price:{
         type:Number,
         required:true
     },
     location:String,
-    country:String
+    country:String,
+  
+    reviews:[{
+        type:Schema.Types.ObjectId,
+        ref:Review,
+    }],
+    owner:{
+        type:Schema.Types.ObjectId,
+        ref:User,
+
+    },
 });
 
 //collection

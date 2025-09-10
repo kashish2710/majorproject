@@ -1,22 +1,100 @@
 <% layout('/layouts/boilerplate') -%>
 </head>
+<style>
+  #filters{
+    display:flex;
+    flex-wrap: wrap;
+  align-items:center;
+  }
+  .filter{padding-top:0.5rem;
+    border-radius: 20%;
+    text-align:center;
+    margin-top: 1rem;
+    margin-right: 2rem;
+    opacity :0.8;
+  }
+  .filter:hover{
+    cursor:pointer;
+    opacity:1;
+ 
+  }
+  .tax-info{
+    display:none;
+  }
+  .tax-toggle{margin-left: 2rem;;
+    border:1px solid black;
+    border-radius:1rem;
+    height:3.25rem;
+    padding:1rem;
+  }
+</style>
 <body>
-    <h1>All Listings</h1>
-    <!-- <form method="get" action="/listings/create">
-        <button>New Create</button>
-    </form> -->
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+   <div id="filters">
+  <div class="filter">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-mountain"></i></div>
+    <p>Mountains</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-bowl-food"></i></div>
+    <p>Restaurent</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-cow"></i></div>
+    <p>Farms</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-person-swimming"></i></div>
+    <p>Pools</p>
+  </div>
+  <div class="filter">
+    <div><i class="fas fa-hiking"></i></div>
+    <p>Hiking</p>
+  </div>
+  <div class="filter">
+    <div><i class="fas fa-dog"></i> </div>
+    <p>Pet Friendly</p>
+  </div>
+  <div class="filter">
+    <div><i class="fas fa-ship"></i> </div>
+    <p>Ships</p>
+  </div>
+  <div class="filter">
+    <div><i class="fas fa-fish"></i></div>
+    <p>Fishing</p>
+  </div>
+  <div class="filter">
+    <div><i class="fas fa-skiing"></i></div>
+    <p>Skiing</p>
+  </div>
+
+  <div class="tax-toggle">
+   <div class="form-check form-switch form-check-reverse">
+  <input class="form-check-input" type="checkbox" id="switchCheckReverse">
+  <label class="form-check-label" for="switchCheckReverse">Display total after taxes</label>
+</div>
+  </div>
+   </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
     <% for(listing of alllistings){%>
  <a href="/listings/<%=listing.id%>" class="listing_link">
-  <div class="card" style="width: 20rem;">
-  <img src="<%=listing.image %> " class="card-img-top" alt="image" height="300rem">
+  <div class="card col listing-card" style="width: 20rem;">
+  <img src="<%=listing.image.url %> " class="card-img-top" alt="image" height="300rem">
   <div class="card-img-overlay"></div>
   <div class="card-body">
     <p class="card-text"><b><%= listing.title %></b><br>
-        &#8377 <%=listing.price%>
+        &#8377; <%=listing.price.toLocaleString("en-IN")%> / Night
+        <i class="tax-info">&nbsp; &nbsp;+18%GST</i>
                 <br>
-       <%=listing.location%>
-      
+       <%=listing.location%><br>
+       <%=listing.country%>
     </p>
   </div>
   </div>
@@ -28,3 +106,19 @@
 
 </body>
 
+<script>
+  let checkbox=document.getElementById("switchCheckReverse");
+checkbox.addEventListener('click',()=>{
+ let tax_info=document.getElementsByClassName("tax-info");
+for(info of tax_info){
+  if(info.style.display!="inline"){
+  info.style.display="inline";
+  }
+  else{
+    info.style.display="none";
+  }
+
+}
+})
+
+</script>
