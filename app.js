@@ -1,7 +1,6 @@
-if(process.env.NODE_ENV !="production"){
 require('dotenv').config();
-}
 
+console.log(process.env.CLOUD_NAME, process.env.CLOUD_API_KEY, process.env.CLOUD_API_SECRET);
 console.log(process.env.SECRET)
 
 const express = require("express");
@@ -11,7 +10,8 @@ const Listing = require("./models/listings.js");
 const methodOverride = require('method-override');
 const path = require('path');
 const ejsMate = require('ejs-mate');
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = process.env.DB_URL;
+
 const ExpressError = require("./utils/ExpressError.js");
 const cors = require('cors');
 const listingRouter = require("./routes/listing.js");
@@ -22,6 +22,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 let User = require("./models/user.js");
 const userRouter = require("./routes/user.js");
+
+
 
 // Mongo connection
 async function main() {
@@ -45,7 +47,7 @@ app.use(cors());
 
 // Session & flash setup
 const sessionOptions = {
-    secret: "mycode",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -76,6 +78,8 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
+
+
 // 404 handler (if no route matches)
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
@@ -86,6 +90,11 @@ app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong!" } = err;
     res.status(statusCode).render("error.ejs", { err });
 });
+
+
+
+
+
 
 // Port
 app.listen(8080, () => {

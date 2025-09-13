@@ -33,7 +33,24 @@ router.get('/:id/edit',isLoggedin,isOwner,listingController.editlisting);
 //update-route
 router.put('/:id',isLoggedin,isOwner,upload.single('listing[image]'),listingController.updatelisting);
 
-
+//search
+router.get("/search", async (req, res) => {
+  const query = req.query.q;
+  try {
+    let listings = [];
+    if (query) {
+      listings = await Listing.find({
+        country: { $regex: query, $options: "i" }
+      });
+    } else {
+      listings = await Listing.find({});
+    }
+    res.render("listings/index", { listings });
+  } catch (err) {
+    console.log(err);
+    res.redirect("/listings");
+  }
+});
 
 //delete-route
 router.delete('/:id',isLoggedin,isOwner,listingController.deletelisting);
