@@ -31,6 +31,11 @@ const listingSchema=new Schema({
         ref:User,
 
     },
+    capacity:{
+        type:Number,
+         required:true
+        
+    }
 });
 
 //collection

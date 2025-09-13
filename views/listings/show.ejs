@@ -18,9 +18,15 @@
              <p> &#8377 <%=listing.price.toLocaleString("en-IN")%> </p>
                 <p><%= listing.location %></p>
                 <p><%= listing.country %></p>
+                 
+                  <p> Capacity:  <%=listing.capacity%></p>
+                
                  <% if(currUser) { %>  
+                 <form method="get" action="/listin">
                   <button class="btn btn-success">Book Now</button>
+                </form> 
                   <% } %>
+
        
        </div>
     </div>

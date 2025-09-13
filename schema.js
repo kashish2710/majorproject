@@ -6,7 +6,8 @@ listing:Joi.object({
     location:Joi.string().required(),
     country:Joi.string().required(),
     price:Joi.number().required().min(0),
-    image:Joi.string().allow("",null)
+    image:Joi.string().allow("",null),
+    capacity:Joi.number().required().min(0)
 }).required()
 });
 
