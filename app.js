@@ -78,6 +78,28 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
+app.get("/search", async (req, res) => {
+  try {
+    let query = req.query.q;   // jo user ne type kiya
+    if (!query) {
+      // agar empty search hai toh simply explore page ya all listings dikha do
+      return res.redirect("/listings");
+    }
+
+    // Regex based case-insensitive search
+    let results = await Listing.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },       // title match
+        { location: { $regex: query, $options: "i" } }    // location match
+      ]
+    });
+
+    res.render("listings/searchResults.ejs", { results, query });
+  } catch (err) {
+    console.error(err);
+    res.redirect("/listings");
+  }
+});
 
 
 // 404 handler (if no route matches)
@@ -97,6 +119,6 @@ app.use((err, req, res, next) => {
 
 
 // Port
-app.listen(8080, () => {
+app.listen(3000, () => {
     console.log("Port is listening!");
 });
