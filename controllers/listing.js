@@ -144,3 +144,9 @@ module.exports.deletelisting = wrapAsync(async (req, res) => {
   req.flash("error", "Listing deleted!");
   res.redirect('/listings');
 });
+
+module.exports.bookForm = async (req, res) => {
+  const listing = await Listing.findById(req.params.id);
+  if (!listing) return res.send("Listing not found");
+  res.render("listings/book", { listing });
+}

@@ -57,6 +57,20 @@ router.delete('/:id',isLoggedin,isOwner,listingController.deletelisting);
 
 
 
+router.get("/:id/book", async (req, res) => {
+  const listing = await Listing.findById(req.params.id);
+  if (!listing) return res.send("Listing not found");
+
+  if (!req.isAuthenticated()) {
+    // Redirect back to the listing page, not the booking form
+    req.session.returnTo = `/listings/${listing._id}`;
+    req.flash("error", "You must be logged in to book");
+    return res.redirect("/login");
+  }
+
+  // If logged in, render booking form
+  res.render("listings/book", { listing });
+});
 
 
 module.exports=router;

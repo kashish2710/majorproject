@@ -1,43 +1,45 @@
-const mongoose=require("mongoose");
-const Schema=mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const Review = require("./review"); 
 const User = require("./user"); 
-const listingSchema=new Schema({
-    title:{
-        type:String,
-        required:true
-    },
-    description:{
-        type:String,
-        required:true
-    },
-    image:{
-       url:String,
-       filename:String
-    },
-    price:{
-        type:Number,
-        required:true
-    },
-    location:String,
-    country:String,
-  
-    reviews:[{
-        type:Schema.Types.ObjectId,
-        ref:Review,
-    }],
-    owner:{
-        type:Schema.Types.ObjectId,
-        ref:User,
 
+const listingSchema = new Schema({
+    title: {
+        type: String,
+        required: true
     },
-    capacity:{
-        type:Number,
-         required:true
-        
+    description: {
+        type: String,
+        required: true
+    },
+    image: {
+       url: String,
+       filename: String
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    location: String,
+    country: String,
+    reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: Review,
+    }],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: User,
+    },
+    capacity: {
+        type: Number,
+        required: true
+    },
+    booked_count: {
+        type: Number,
+        default: 0  
     }
 });
 
-//collection
-const Listing=mongoose.model("Listing",listingSchema);
-module.exports=Listing;
+// Collection
+const Listing = mongoose.model("Listing", listingSchema);
+module.exports = Listing;

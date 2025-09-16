@@ -22,6 +22,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 let User = require("./models/user.js");
 const userRouter = require("./routes/user.js");
+const bookingRoutes = require("./routes/booking.js");
 
 
 
@@ -78,6 +79,7 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
+
 app.get("/search", async (req, res) => {
   try {
     let query = req.query.q;   // jo user ne type kiya
@@ -101,6 +103,8 @@ app.get("/search", async (req, res) => {
   }
 });
 
+
+app.use("/bookings", bookingRoutes);
 
 // 404 handler (if no route matches)
 app.all("*", (req, res, next) => {

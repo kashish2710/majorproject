@@ -1,0 +1,42 @@
+<% layout('/layouts/boilerplate') -%>
+
+<div class="row mt-4">
+  <div class="col-6 offset-3">
+    <h2>Book Listing: <%= listing.title %></h2>
+
+    <form action="/bookings" method="POST">
+      <!-- Hidden Listing ID -->
+      <input type="hidden" name="listing_id" value="<%= listing._id %>">
+
+      <!-- User Details -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="phone" name="phone" required>
+      </div>
+
+      <!-- Seats -->
+      <div class="mb-3">
+        <label for="seats" class="form-label">Number of Seats</label>
+        <input type="number" class="form-control" id="seats" name="seats" min="1" value="1" required>
+      </div>
+
+      <!-- Special Requests -->
+      <div class="mb-3">
+        <label for="notes" class="form-label">Special Requests (Optional)</label>
+        <textarea class="form-control" id="notes" name="notes"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-success">Confirm Booking</button>
+    </form>
+  </div>
+</div>
