@@ -29,59 +29,61 @@
   }
 </style>
 <body>
-   <div id="filters">
+ <div id="filters">
   <div class="filter">
     <div><i class="fa-solid fa-fire"></i></div>
     <p>Trending</p>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-bed"></i></div>
-    <p>Rooms</p>
+    <div><i class="fa-solid fa-paint-brush"></i></div>
+    <p>Art</p>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-mountain"></i></div>
-    <p>Mountains</p>
+    <div><i class="fa-solid fa-music"></i></div>
+    <p>Dance</p>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-bowl-food"></i></div>
-    <p>Restaurent</p>
+    <div><i class="fa-solid fa-camera"></i></div>
+    <p>Photography</p>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-cow"></i></div>
-    <p>Farms</p>
+    <div><i class="fa-solid fa-utensils"></i></div>
+    <p>Food</p>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-person-swimming"></i></div>
-    <p>Pools</p>
+    <div><i class="fa-solid fa-mountain-sun"></i></div>
+    <p>Adventure</p>
   </div>
   <div class="filter">
-    <div><i class="fas fa-hiking"></i></div>
-    <p>Hiking</p>
+    <div><i class="fa-solid fa-theater-masks"></i></div>
+    <p>Theatre</p>
   </div>
   <div class="filter">
-    <div><i class="fas fa-dog"></i> </div>
-    <p>Pet Friendly</p>
+    <div><i class="fa-solid fa-hands-helping"></i></div>
+    <p>Workshops</p>
   </div>
   <div class="filter">
-    <div><i class="fas fa-ship"></i> </div>
-    <p>Ships</p>
+    <div><i class="fa-solid fa-ship"></i></div>
+    <p>Boat Trips</p>
   </div>
   <div class="filter">
-    <div><i class="fas fa-fish"></i></div>
+    <div><i class="fa-solid fa-fish"></i></div>
     <p>Fishing</p>
   </div>
   <div class="filter">
-    <div><i class="fas fa-skiing"></i></div>
+    <div><i class="fa-solid fa-skiing"></i></div>
     <p>Skiing</p>
   </div>
+</div>
 
-  <div class="tax-toggle">
+<!-- tax button -->
+  <!-- <div class="tax-toggle">
    <div class="form-check form-switch form-check-reverse">
   <input class="form-check-input" type="checkbox" id="switchCheckReverse">
   <label class="form-check-label" for="switchCheckReverse">Display total after taxes</label>
-</div>
-  </div>
-   </div>
+</div> -->
+  
+
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
     <% for(listing of alllistings){%>
  <a href="/listings/<%=listing.id%>" class="listing_link">
@@ -90,7 +92,7 @@
   <div class="card-img-overlay"></div>
   <div class="card-body">
     <p class="card-text"><b><%= listing.title %></b><br>
-        &#8377; <%=listing.price.toLocaleString("en-IN")%> / Night
+        &#8377; <%=listing.price.toLocaleString("en-IN")%> per person
         <i class="tax-info">&nbsp; &nbsp;+18%GST</i>
                 <br>
        <%=listing.location%><br>
