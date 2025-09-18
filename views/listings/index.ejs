@@ -1,126 +1,385 @@
+
 <% layout('/layouts/boilerplate') -%>
+<head>
+  <style>
+    #chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+}
+
+/* Chatbot Icon */
+#chatbot-icon {
+  background: linear-gradient(to right, pink, #FFA07A, #fa9874);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 160, 122, 0.4);
+  transition: transform 0.2s;
+}
+
+#chatbot-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Chatbot Box - hidden initially */
+#chatbot-box {
+  display: none;  /* start hidden */
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 300px;
+  max-height: 400px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+#chatbot-header {
+  background: linear-gradient(to right, pink, #FFA07A, #fa9874);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}
+
+/* Messages Area */
+#chatbot-messages {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Input Field */
+#chatbot-input {
+  border: none;
+  border-top: 1px solid #ddd;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  width: 100%;
+  outline: none;
+}
+
+    /* Hero Section Styles */
+    #hero-section {
+    
+      height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+#hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+              url("/home.png") no-repeat center center/cover;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+
+
+    .hero-content {
+     
+            z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+   .cta-button{
+  width:15rem;
+  background: linear-gradient(to right, pink , #FFA07A, #fa9874); /* Light Salmon to Coral */
+  /* If you want even lighter: */
+  /* background: linear-gradient(to right, #FFDAB9, #FFB6C1); */ /* Peach Puff to Light Pink */
+  color: white !important; /* Keep text white for contrast */
+  padding: 0.8rem 2rem;
+  text-align: center;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 160, 122, 0.4); /* Softer shadow matching the gradient */
+}
+
+
+    .cta-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Filters & Host Button */
+    #filters-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding: 0 1rem;
+      flex-wrap: wrap;
+    }
+
+    #filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter {
+      padding: 0.5rem;
+      text-align: center;
+      margin-right: 2rem;
+      opacity: 0.8;
+      transition: all 0.2s ease;
+    }
+    
+    .filter:hover, .filter.active {
+      cursor: pointer;
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+
+    .filter div {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .filter p {
+      font-size: 0.9rem;
+    }
+
+    .host-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: bold;
+      white-space: nowrap;
+      transition: background-color 0.2s ease;
+    }
+
+    .host-btn:hover {
+      background-color: #45a049;
+    }
+
+    /* Listing Card Changes */
+    .listing-card {
+      border: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+      margin-bottom: 2rem;
+    }
+
+    .listing-card:hover {
+      transform: scale(1.02);
+    }
+
+    .listing-card .card-img-top {
+      height: 300px;
+      object-fit: cover;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .listing-card .card-body {
+      padding: 1rem;
+    }
+    
+    .listing-card .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .card-text strong {
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .rating {
+      color: #FFC107;
+    }
+
+    .tax-info {
+      font-size: 0.8rem;
+      color: #888;
+      display: none;
+    }
+
+    .tax-toggle {
+      margin-left: 2rem;
+      border: 1px solid black;
+      border-radius: 1rem;
+      height: 3.25rem;
+      padding: 1rem;
+    }
+   
+  </style>
 </head>
-<style>
-  #filters{
-    display:flex;
-    flex-wrap: wrap;
-  align-items:center;
-  }
-  .filter{padding-top:0.5rem;
-    border-radius: 20%;
-    text-align:center;
-    margin-top: 1rem;
-    margin-right: 2rem;
-    opacity :0.8;
-  }
-  .filter:hover{
-    cursor:pointer;
-    opacity:1;
- 
-  }
-  .tax-info{
-    display:none;
-  }
-  .tax-toggle{margin-left: 2rem;;
-    border:1px solid black;
-    border-radius:1rem;
-    height:3.25rem;
-    padding:1rem;
-  }
-</style>
+
 <body>
- <div id="filters">
-  <div class="filter">
-    <div><i class="fa-solid fa-fire"></i></div>
-    <p>Trending</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-paint-brush"></i></div>
-    <p>Art</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-music"></i></div>
-    <p>Dance</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-camera"></i></div>
-    <p>Photography</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-utensils"></i></div>
-    <p>Food</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-mountain-sun"></i></div>
-    <p>Adventure</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-theater-masks"></i></div>
-    <p>Theatre</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-hands-helping"></i></div>
-    <p>Workshops</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-ship"></i></div>
-    <p>Boat Trips</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-fish"></i></div>
-    <p>Fishing</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-skiing"></i></div>
-    <p>Skiing</p>
-  </div>
-</div>
 
-<!-- tax button -->
-  <!-- <div class="tax-toggle">
-   <div class="form-check form-switch form-check-reverse">
-  <input class="form-check-input" type="checkbox" id="switchCheckReverse">
-  <label class="form-check-label" for="switchCheckReverse">Display total after taxes</label>
-</div> -->
-  
 
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-    <% for(listing of alllistings){%>
- <a href="/listings/<%=listing.id%>" class="listing_link">
-  <div class="card col listing-card" style="width: 20rem;">
-  <img src="<%=listing.image.url %> " class="card-img-top" alt="image" height="300rem">
-  <div class="card-img-overlay"></div>
-  <div class="card-body">
-    <p class="card-text"><b><%= listing.title %></b><br>
-        &#8377; <%=listing.price.toLocaleString("en-IN")%> per person
-        <i class="tax-info">&nbsp; &nbsp;+18%GST</i>
-                <br>
-       <%=listing.location%><br>
-       <%=listing.country%>
-    </p>
-  </div>
-  </div>
-</a>   
-<%}%>
 
+  <div id="hero-section">
+    <div class="hero-content">
+      <h1>Unlock Your Adventurous Weekend</h1>
+      <p>Discover & Book Local Activities</p>
+      <a href="#filters" class="cta-button">Find Your Fun</a>
     </div>
 
+  </div>
+  <div id="filters-container">
+    <div id="filters">
+      <div class="filter">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-paint-brush"></i></div>
+        <p>Art</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-music"></i></div>
+        <p>Dance</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-camera"></i></div>
+        <p>Photography</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-utensils"></i></div>
+        <p>Food</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-mountain-sun"></i></div>
+        <p>Adventure</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-theater-masks"></i></div>
+        <p>Theatre</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-hands-helping"></i></div>
+        <p>Workshops</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-ship"></i></div>
+        <p>Boat Trips</p>
+      </div>
+      <div class="filter">
+        <div><i class="fa-solid fa-fish"></i></div>
+        <p>Fishing</p>
+      </div>
+      
+    <!-- <a href="/listings/new" class="host-btn">Host an Event</a> -->
+  </div>
+  
+  <!-- <div class="tax-toggle">
+    <div class="form-check form-switch form-check-reverse">
+      <input class="form-check-input" type="checkbox" id="switchCheckReverse">
+      <label class="form-check-label" for="switchCheckReverse">Display total after taxes</label>
+    </div>
+  </div> -->
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(listing of alllistings){%>
+      <a href="/listings/<%=listing.id%>" class="listing_link">
+        <div class="card col listing-card">
+          <img src="<%=listing.image.url %>" class="card-img-top" alt="listing_image">
+          <div class="card-body">
+            <h5 class="card-title"><%= listing.title %></h5>
+            <p class="card-text">
+      
+              <span class="rating">&#9733; <%= listing.avgRating || 'New' %></span>
+              <br>
+              <strong>₹<%= listing.price.toLocaleString("en-IN") %></strong> per person
+              <i class="tax-info">&nbsp; &nbsp;+18% GST</i>
+              <br>
+              <span class="location"><%= listing.location %>, <%= listing.country %></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    <%}%>
+  </div>
+<!-- Chatbot Widget -->
+<!-- Chatbot Widget -->
+<div id="chatbot-container">
+  <div id="chatbot-icon">💬</div>
+  <div id="chatbot-box">
+    <div id="chatbot-header">Chat with us!</div>
+    <div id="chatbot-messages"></div>
+    <input type="text" id="chatbot-input" placeholder="Type your message...">
+  </div>
+</div>
+<script>
+  const chatbotIcon = document.getElementById('chatbot-icon');
+const chatbotBox = document.getElementById('chatbot-box');
+const chatbotInput = document.getElementById('chatbot-input');
+const chatbotMessages = document.getElementById('chatbot-messages');
+
+// Toggle chat box when icon is clicked
+chatbotIcon.addEventListener('click', () => {
+  chatbotBox.style.display = chatbotBox.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// Handle sending messages
+chatbotInput.addEventListener('keypress', (e) => {
+  if(e.key === 'Enter' && chatbotInput.value.trim() !== '') {
+    const userMsg = document.createElement('div');
+    userMsg.textContent = 'You: ' + chatbotInput.value;
+    chatbotMessages.appendChild(userMsg);
+
+    const botMsg = document.createElement('div');
+    botMsg.textContent = 'Bot: I am here to help!';
+    chatbotMessages.appendChild(botMsg);
+
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    chatbotInput.value = '';
+  }
+});
+
+  </script>
 
 </body>
 
-<script>
-  let checkbox=document.getElementById("switchCheckReverse");
-checkbox.addEventListener('click',()=>{
- let tax_info=document.getElementsByClassName("tax-info");
-for(info of tax_info){
-  if(info.style.display!="inline"){
-  info.style.display="inline";
-  }
-  else{
-    info.style.display="none";
-  }
 
-}
-})
-
-</script>
+  
