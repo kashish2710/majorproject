@@ -1,0 +1,130 @@
+<% layout('/layouts/boilerplate') -%>
+
+<style>
+  /* --- Custom Styles for Peach Theme --- */
+
+  /* Main Container Background */
+  body {
+    background-color: #fcf8f3; /* Very light cream/off-white background */
+  }
+
+  /* Card Styling */
+  .peach-card {
+    background-color: #ffffff;
+    border-radius: 20px; /* More rounded, softer look */
+    box-shadow: 0 12px 40px rgba(255, 179, 158, 0.3); /* Soft, peach-toned shadow */
+    padding: 3.5rem !important;
+    border: 1px solid #ffe5d9; /* Very light peach border */
+  }
+
+  /* Title Styling */
+  .peach-card h2 {
+    color: #e5989b; /* Muted Dusty Rose/Peach for the title */
+    font-family: 'Georgia', serif; /* A subtle change for elegance */
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #f9dadc; /* Light border below title */
+    padding-bottom: 0.75rem;
+  }
+
+  /* Image Styling */
+  .peach-card .listing-image {
+    max-width: 100%;
+    width: 450px;
+    height: auto;
+    border-radius: 15px;
+    /* Soft frame effect */
+    border: 6px solid #fef3f1; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    object-fit: cover;
+  }
+
+  /* Text Details Styling */
+  .peach-details p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4a4a4a; /* Soft dark gray text */
+    margin-bottom: 0.8rem;
+  }
+  .peach-details strong {
+    color: #b5838d; /* Muted Plum/Rose color for labels */
+    font-weight: 600;
+    width: 160px; /* Fixed width for better detail alignment */
+    display: inline-block;
+  }
+
+
+  /* Primary Button (Book Now) */
+  .btn-book-now-peach {
+    background-color: #ffb3a7; /* Bright but soft Peach */
+    border: none;
+    color: #4a4a4a; /* Dark text for contrast */
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 179, 158, 0.6);
+  }
+  .btn-book-now-peach:hover {
+    background-color: #ff988e; /* Darker peach on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 179, 158, 0.8);
+    color: #333;
+  }
+
+  /* Secondary Button (Back to Listings) */
+  .btn-back-list-peach {
+    background-color: #f0ead2; /* Soft Cream/Vanilla color */
+    border: 1px solid #b5838d;
+    color: #555;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  .btn-back-list-peach:hover {
+    background-color: #e0d0b0;
+    color: #333;
+  }
+</style>
+
+<div class="container mt-3 mb-5"> 
+  <div class="card peach-card">
+    <h2><%= listing.title %></h2>
+    <div class="row">
+      
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        <img src="<%= listing.image.url %>" class="listing-image" alt="Listing Image">
+      </div>
+
+      <div class="col-lg-7">
+        <div class="peach-details">
+          <p><strong> Description:</strong> <%= listing.description %></p>
+          <hr style="border-top: 1px solid #f9dadc;">
+
+          <p><strong> Price:</strong> <span style="font-size: 1.3rem; color: #e5989b; font-weight: 700;">₹<%= listing.price.toLocaleString("en-IN") %></span></p>
+
+          <p><strong> Hosted by:</strong> <%= listing.owner ? listing.owner.username : "kashish" %></p>
+          <p><strong> Event Date:</strong> 
+            <% if (listing.date) { %>
+              <%= listing.date.toDateString() %>
+            <% } else { %>
+              Date not specified
+            <% } %>
+          </p>
+          <p><strong> Location:</strong> <%= listing.location %>, <%= listing.country %></p>
+          <p><strong> Available Seats:</strong> <%= listing.capacity - listing.booked_count %></p>
+          <p><strong>Contact:</strong> <a href="tel:<%= listing.contact %>" class="text-decoration-none" style="color: #b5838d;"><%= listing.contact %></a></p>
+          
+         
+          <div class="mt-5 d-flex gap-3">
+            <a href="/listings/<%= listing._id %>/book" class="btn btn-book-now-peach btn-lg flex-grow-1">Book Now</a>
+            <a href="/listings" class="btn btn-back-list-peach btn-lg flex-grow-1">Back to Listings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

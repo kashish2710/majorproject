@@ -71,6 +71,36 @@ router.get("/:id/book", async (req, res) => {
   // If logged in, render booking form
   res.render("listings/book", { listing });
 });
+// GET: Details page for a listing
+router.get('/:id/details', async (req, res) => {
+  const { id } = req.params;
+  const listing = await Listing.findById(id).populate('owner').populate('reviews');
+
+  if (!listing) {
+    req.flash('error', 'Listing not found!');
+    return res.redirect('/listings');
+  }
+
+  res.render('listings/details', { listing });
+});
+// Add listing to/remove from wishlist
+router.post('/:id/wishlist', isLoggedin, async (req, res) => {
+  const { id } = req.params;
+  const user = req.user;
+
+  // Check if already in wishlist
+  if(user.wishlist && user.wishlist.includes(id)){
+    // Remove from wishlist
+    user.wishlist = user.wishlist.filter(listingId => listingId.toString() !== id.toString());
+  } else {
+    // Add to wishlist
+    if(!user.wishlist) user.wishlist = [];
+    user.wishlist.push(id);
+  }
+
+  await user.save();
+  res.redirect(`/listings/${id}`);
+});
 
 
 module.exports=router;

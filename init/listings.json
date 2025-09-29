@@ -1,0 +1,134 @@
+[
+  {
+    "title": "Weekend Pottery Workshop",
+    "description": "Learn the art of pottery in this hands-on weekend workshop. Perfect for beginners and hobbyists!",
+    "image": {
+      "filename": "activityimage",
+      "url": "https://images.unsplash.com/photo-1694972945233-202eb17b95aa?q=80&w=1752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 500,
+    "location": "Delhi",
+    "country": "India",
+    "capacity": 20
+  },
+  {
+    "title": "Live Music Fest",
+    "description": "Enjoy an evening of live music performances by local bands and DJs. Food stalls and drinks available.",
+    "image": {
+      "filename": "activityimage",
+      "url": "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2"
+    },
+    "price": 1500,
+    "location": "Bangalore",
+    "country": "India",
+    "capacity": 200
+  },
+  {
+    "title": "Yoga & Meditation Retreat",
+    "description": "Recharge your mind and body with a guided yoga and meditation session amidst nature.",
+    "image": {
+      "filename": "activityimage",
+      "url": "https://images.unsplash.com/photo-1506126613408-eca07ce68773"
+    },
+    "price": 800,
+    "location": "Rishikesh",
+    "country": "India",
+    "capacity": 30
+  },
+  {
+    "title": "Coding Bootcamp (Weekend)",
+    "description": "A 2-day coding bootcamp for beginners to learn web development basics with hands-on projects.",
+    "image": {
+      "filename": "activityimage",
+      "url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c"
+    },
+    "price": 2000,
+    "location": "Mumbai",
+    "country": "India",
+    "capacity": 40
+  },
+  {
+    "title": "Food & Flea Market",
+    "description": "Discover local food stalls, handmade crafts, and vintage items at this vibrant weekend market.",
+    "image": {
+      "filename": "activityimage",
+      "url": "https://images.unsplash.com/photo-1633207634866-f737efc72c91?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 300,
+    "location": "Goa",
+    "country": "India",
+    "capacity": 500
+  },
+  {
+    "title": "Stand-Up Comedy Night",
+    "description": "Laugh your heart out at our comedy night featuring upcoming stand-up comedians.",
+    "image": {
+      "filename": "listingimage",
+      "url": "https://images.unsplash.com/photo-1641903806973-17eaf2d2634f?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 700,
+    "location": "Pune",
+    "country": "India",
+    "capacity": 100
+  },
+  {
+    "title": "Photography Walk",
+    "description": "Join our photography experts for a city walk and learn the basics of street and landscape photography.",
+    "image": {
+      "filename": "listingimage",
+      "url": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 600,
+    "location": "Jaipur",
+    "country": "India",
+    "capacity": 25
+  },
+  {
+    "title": "Dance Workshop (Hip-Hop)",
+    "description": "Groove to the beats with our weekend hip-hop dance workshop, suitable for all levels.",
+    "image": {
+      "filename": "listingimage",
+      "url": "https://images.unsplash.com/photo-1595566125594-bc6d3487f777?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 900,
+    "location": "Kolkata",
+    "country": "India",
+    "capacity": 35
+  },
+  {
+    "title": "Adventure Trek",
+    "description": "A weekend trek to the nearby hills. Includes guide, meals, and camping under the stars.",
+    "image": {
+      "filename": "listingimage",
+      "url": "https://images.unsplash.com/37/lynDyjGSR9eR57ouPIEE_IMG_woods.jpg?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 1800,
+    "location": "Manali",
+    "country": "India",
+    "capacity": 50
+  },
+  {
+    "title": "Art & Painting Workshop",
+    "description": "Unleash your creativity with acrylic painting and sketching sessions led by local artists.",
+    "image": {
+      "filename": "listingimage",
+      "url": "https://images.unsplash.com/photo-1752649937334-f5c3c2136b4f?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 700,
+    "location": "Ahmedabad",
+    "country": "India",
+    "capacity": 20
+  },
+  {
+    "title": "Theatre Play Evening",
+    "description": "Experience a night of drama and laughter with live theatre performances by local groups.",
+    "image": {
+      "filename": "listingimage",
+      "url": "https://images.unsplash.com/photo-1747155827634-012749f4eca1?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "price": 1000,
+    "location": "Lucknow",
+    "country": "India",
+    "capacity": 120
+  }
+]

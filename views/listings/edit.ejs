@@ -16,11 +16,10 @@
            <div class=invalid-feedback>Write Description </div>
         </div>
        
-        <div class="mb-3">
-            Original image <br>
-          <img src="<%=original %>"/>
-           
-        </div>
+      <div class="mb-3">
+    Original image <br>
+    <img src="<%= original %>" style="width: 200px; height: auto; border: 1px solid #ccc; padding: 5px;"/>
+</div>
         <div class="mb-3">
             <label for="image" class="form-label">Upload New Image</label>
            <input  name="listing[image]" class="form-control" type="file">

@@ -1,129 +1,227 @@
 <% layout('/layouts/boilerplate') -%>
 
-  <div class="row">
-    <div class="col-8 offset-2 ">
-                <div class="col-8 offset-2">
-                  <h2> <%=listing.title%></h2>
-                </div>
-    
+<style>
+  .theme-btn {
+    background: linear-gradient(to right, #FF7F50, #FF6F91, #FF9671);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(255, 111, 145, 0.3);
+  }
 
- 
-        <div class="card col-9 offset-2 " >
-      <img src="<%=listing.image.url%>" class="card-img-top show_img" alt="listing_image">
-      <div class="card-body">
-        <p>
-         Hosted by  <i><%= listing.owner ? listing.owner.username : "kashish" %></i></p>
+  .theme-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(255, 111, 145, 0.45);
+  }
 
-       <p class="card-text"><%=listing.description%></p>
-                
-             <p> &#8377 <%=listing.price.toLocaleString("en-IN")%> </p>
-                <p><%= listing.location %></p>
-                <p><%= listing.country %></p>
-                 
-                 <p>Available Seats: <%= listing.capacity - listing.booked_count %></p>
+  .image-container {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+  }
 
-                
-             
-  <form method="get" action="/listings/<%= listing._id %>/book">
-    <button class="btn btn-success">Book Now</button>
-  </form> 
+  .wishlist-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
 
+  .wishlist-icon.disabled-click {
+    cursor: default;
+  }
+  .wishlist-icon.disabled-click:hover {
+    transform: none;
+  }
 
+  .wishlist-icon.fa-solid.saved {
+    color: #e5989b !important;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  }
 
+  .wishlist-icon:hover:not(.disabled-click) {
+    transform: scale(1.1);
+    color: #ffb3a7;
+  }
 
-       
-       </div>
+  .show_img {
+    max-height: 400px;
+    object-fit: cover;
+    border-top-left-radius: 6px; 
+    border-top-right-radius: 6px;
+  }
+</style>
+
+<div class="row">
+  <div class="col-8 offset-2">
+    <h2><%= listing.title %></h2>
+  </div>
+
+  <div class="card col-9 offset-2">
+    <div class="image-container">
+      <img src="<%= listing.image.url %>" class="card-img-top show_img" alt="listing_image">
+
+      <i 
+        class="fa-heart wishlist-icon 
+          <% if (currUser) { %>
+            <%= currUser.wishlist && currUser.wishlist.some(id => id.toString() === listing._id.toString()) ? 'fa-solid saved' : 'fa-regular' %>
+          <% } else { %>
+            fa-regular disabled-click
+          <% } %>" 
+        data-listing-id="<%= listing._id %>" 
+        <% if(currUser) { %> onclick="toggleWishlist(this)" <% } else { %> title="Login to save to wishlist" <% } %>
+      ></i>
     </div>
-<% if(currUser && listing.owner && currUser._id.equals(listing.owner._id)){ %>
 
-      <div class="btns row mt-2">
-        <div class="col-2 offset-2">
-            <form method="get" action="/listings/<%=listing._id %>/edit" >
-        <button class="btn btn-dark ">Edit</button>
-    </form>
-        </div>
-        <div class="col-3 offset-1">
-               <form method="post" action="/listings/<%=listing._id%>?_method=DELETE"  >
-        <button class="btn btn-danger">Delete</button>
-    </form>
-        </div>
-     
-      </div>
-       <% } %>
-           
-         <div class="col-10 offset-2  mb-3">
-        <hr>
-        <% if(currUser) { %> 
-        <h4>Leave a Review</h4>
-        <form action="/listings/<%=listing.id%>/reviews" method="POST" novalidate class="needs-validation">
-           <div class="mb-3 mt-3">
-              <!-- <label for="rating" class="form-label">Rating</label> -->
-              <!-- <input type="range"min=1 max="5" id="rating" name="review[rating]" class="form-range"> -->
-<!-- <label for="rating" class="form-label">Rating</label> -->
-  <label class="form-label">Rating</label>
-<div id="starRating" class="star-rating">
-  <span data-value="1">☆</span>
-  <span data-value="2">☆</span>
-  <span data-value="3">☆</span>
-  <span data-value="4">☆</span>
-  <span data-value="5">☆</span>
-</div>
+    <div class="card-body">
+      <p>Hosted by <i><%= listing.owner ? listing.owner.username : "kashish" %></i></p>
+      <p class="card-text"><%= listing.description %></p>
+      <p> &#8377 <%= listing.price.toLocaleString("en-IN") %> </p>
+      <p> <%= listing.location %></p>
+      <p><%= listing.country %></p>
+      <p> Available Seats: <%= listing.capacity - listing.booked_count %></p>
 
-<!--  Hidden input to send correct number -->
-<input type="hidden" name="review[rating]" id="ratingInput" value="0">
-
-
-
-
-           </div>
-           <div class="mb-3 mt-3">
-            <label for="comment"  class="form-label" >Comments</label>
-            <textarea name="review[comment]" id="comment" cols="10" rows="10"  class="form-control" required></textarea>
-            <div class="invalid-feedback">Please add some comments for review</div>
-           </div>
-           <button class="btn btn-outline-dark">Submit</button>
+      <div class="mt-4" style="display: flex; align-items: center;">
+        <form method="get" action="/listings/<%= listing._id %>/book">
+          <button class="btn" style="background: linear-gradient(135deg, #28a745, #34d058); color: white; padding: 10px 25px; border: none; border-radius: 30px; font-size: 16px; font-weight: 600; box-shadow: 0px 4px 10px rgba(40,167,69,0.3); cursor: pointer;"
+            onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 5px 14px rgba(40,167,69,0.5)';"
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0px 4px 10px rgba(40,167,69,0.3)';">
+            Book Now
+          </button>
         </form>
-        <hr>
-        </div>
-       
-          <% } %>
-    <h5>All Reviews</h5>
-       <div class="container">
-  <% for (let i = 0; i < listing.reviews.length; i += 2) { %>
-    <div class="row mb-3">
-      <% for (let j = i; j < i + 2 && j < listing.reviews.length; j++) { 
-        let review = listing.reviews[j]; 
-      %>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <%= review.author.username %>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title" style="font-size: 1rem; font-weight: lighter;">
-                <%= review.comment %>
-              </h5>
-              <p class="card-text">
-                <% for (let k = 0; k < review.rating; k++) { %>⭐<% } %>
-                <% for (let k = review.rating; k < 5; k++) { %>☆<% } %>
-              </p>
-              <% if(currUser && currUser._id.equals(review.author._id)){ %>
-              <form method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
-                <button class="btn btn-outline-danger">Delete</button>
-              </form>
-              <% } %>
-            </div>
+
+        <form method="get" action="/listings/<%= listing._id %>/details" style="margin-left: 150px;">
+          <button class="btn" style="background: linear-gradient(135deg, #007bff, #00aaff); color: white; padding: 10px 25px; border: none; border-radius: 30px; font-size: 16px; font-weight: 600; box-shadow: 0px 4px 10px rgba(0,123,255,0.3); cursor: pointer;"
+            onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 5px 14px rgba(0,123,255,0.5)';"
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0px 4px 10px rgba(0,123,255,0.3)';">
+            View Details
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <% if(currUser && listing.owner && currUser._id.equals(listing.owner._id)) { %>
+    <div class="btns row mt-2">
+      <div class="col-2 offset-2">
+        <form method="get" action="/listings/<%= listing._id %>/edit">
+          <button class="btn btn-dark">Edit</button>
+        </form>
+      </div>
+      <div class="col-3 offset-3">
+        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  <% } %>
+
+  <div class="col-10 offset-2 mb-3">
+    <hr>
+    <% if(currUser) { %>
+      <h4>Leave a Review</h4>
+      <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+        <div class="mb-3 mt-3">
+          <label class="form-label">Rating</label>
+          <div id="starRating" class="star-rating">
+            <span data-value="1">☆</span>
+            <span data-value="2">☆</span>
+            <span data-value="3">☆</span>
+            <span data-value="4">☆</span>
+            <span data-value="5">☆</span>
           </div>
+          <input type="hidden" name="review[rating]" id="ratingInput" value="0">
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="comment" class="form-label">Comments</label>
+          <textarea name="review[comment]" id="comment" cols="10" rows="10" class="form-control" required></textarea>
+          <div class="invalid-feedback">Please add some comments for review</div>
+        </div>
+        <button class="btn btn-outline-dark">Submit</button>
+      </form>
+      <hr>
+    <% } %>
+
+    <h5>All Reviews</h5>
+    <div class="container">
+      <% for (let i = 0; i < listing.reviews.length; i += 2) { %>
+        <div class="row mb-3">
+          <% for (let j = i; j < i + 2 && j < listing.reviews.length; j++) {
+            let review = listing.reviews[j];
+          %>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header"><%= review.author.username %></div>
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size: 1rem; font-weight: lighter;">
+                    <%= review.comment %>
+                  </h5>
+                  <p class="card-text">
+                    <% for (let k = 0; k < review.rating; k++) { %>⭐<% } %>
+                    <% for (let k = review.rating; k < 5; k++) { %>☆<% } %>
+                  </p>
+                  <% if(currUser && currUser._id.equals(review.author._id)) { %>
+                    <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                      <button class="btn btn-outline-danger">Delete</button>
+                    </form>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          <% } %>
         </div>
       <% } %>
     </div>
-  <% } %>
+  </div>
 </div>
 
+<script>
+async function toggleWishlist(element) {
+    const listingId = element.getAttribute('data-listing-id');
+    
+    if (element.classList.contains('disabled-click')) {
+        alert("Please log in to save items to your wishlist.");
+        return;
+    }
 
-  </div>
-  </div>
+    try {
+        const response = await fetch(`/wishlist/${listingId}`, { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
 
+        if (response.status === 401) {
+            alert("Login required. Redirecting to login.");
+            window.location.href = '/login'; 
+            return;
+        }
 
+        const data = await response.json();
 
-</html>
+        if (data.success) {
+            if (data.saved) {
+                element.classList.remove('fa-regular');
+                element.classList.add('fa-solid', 'saved');
+            } else {
+                element.classList.remove('fa-solid', 'saved');
+                element.classList.add('fa-regular');
+            }
+        } else {
+            alert(`Wishlist update failed: ${data.message || 'Unknown error'}`);
+        }
+
+    } catch (error) {
+        console.error("Network Error:", error);
+        alert("A network error occurred. Could not connect to the server.");
+    }
+}
+</script>

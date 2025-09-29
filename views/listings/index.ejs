@@ -350,34 +350,53 @@
     <input type="text" id="chatbot-input" placeholder="Type your message...">
   </div>
 </div>
+
 <script>
-  const chatbotIcon = document.getElementById('chatbot-icon');
+const chatbotIcon = document.getElementById('chatbot-icon');
 const chatbotBox = document.getElementById('chatbot-box');
 const chatbotInput = document.getElementById('chatbot-input');
 const chatbotMessages = document.getElementById('chatbot-messages');
 
-// Toggle chat box when icon is clicked
+chatbotBox.style.display = 'none';
+
 chatbotIcon.addEventListener('click', () => {
   chatbotBox.style.display = chatbotBox.style.display === 'flex' ? 'none' : 'flex';
+  chatbotBox.style.flexDirection = 'column';
 });
 
-// Handle sending messages
-chatbotInput.addEventListener('keypress', (e) => {
-  if(e.key === 'Enter' && chatbotInput.value.trim() !== '') {
-    const userMsg = document.createElement('div');
-    userMsg.textContent = 'You: ' + chatbotInput.value;
-    chatbotMessages.appendChild(userMsg);
+function addMessage(sender, text) {
+  const msg = document.createElement('div');
+  msg.textContent = sender + ": " + text;
+  msg.style.marginBottom = '0.5rem';
+  chatbotMessages.appendChild(msg);
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
 
-    const botMsg = document.createElement('div');
-    botMsg.textContent = 'Bot: I am here to help!';
-    chatbotMessages.appendChild(botMsg);
+chatbotInput.addEventListener('keypress', async (e) => {
+  if (e.key === 'Enter' && chatbotInput.value.trim() !== '') {
+    const userText = chatbotInput.value.trim();
+    addMessage("You", userText);
 
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    try {
+     const res = await fetch("http://127.0.0.1:3000/api/chat", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ query: userText })
+});
+
+
+      const data = await res.json();
+      addMessage("Bot", data.answer);
+
+    } catch (err) {
+      console.error(err);
+      addMessage("Bot", "Oops! Something went wrong.");
+    }
+
     chatbotInput.value = '';
   }
 });
-
-  </script>
+</script>
 
 </body>
 

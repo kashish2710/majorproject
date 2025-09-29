@@ -476,19 +476,7 @@ const sampleListings = [
     country: "India",
     capacity: 35,
   },
-  {
-    title: "Cooking Masterclass",
-    description:
-      "Learn to cook authentic Indian dishes with a professional chef in this interactive cooking class.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1512058564366-18510be2db19",
-    },
-    price: 1200,
-    location: "Chennai",
-    country: "India",
-    capacity: 15,
-  },
+   
   {
     title: "Adventure Trek",
     description:
