@@ -211,6 +211,8 @@ const bookingRoutes = require("./routes/booking.js");
 const chatbotRouter = require('./routes/chatbot.js');
 
 const wishlistRoutes = require('./routes/wishlist.js');
+const calenderRouter = require('./routes/calender.js'); 
+
 
 
 
@@ -273,6 +275,7 @@ app.use("/", userRouter);
 app.use("/bookings", bookingRoutes);
 app.use('/wishlist', wishlistRoutes);
 app.use('/api', chatbotRouter); // matches your frontend fetch "/api/chat"
+app.use('/calender', calenderRouter);
 
 
 

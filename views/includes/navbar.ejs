@@ -1,69 +1,140 @@
-
 <style>
+  /* --- Original Styles (Kept as requested) --- */
   .searchD {
-   
-    border-radius: 50px; /* smooth round corners */
+    border-radius: 50px;
   }
 
   .searchinput {
-    padding: 0 2rem; /* wide padding reduced */
-    width: 250px; /* reasonable default width */
+    padding: 0 2rem;
+    width: 250px;
     transition: width 0.3s ease;
   }
 
   .searchinput:focus {
-    width: 350px; /* expand on focus */
+    width: 350px;
   }
 
   .btn-search {
-  
     border-radius: 50px;
     padding: 0.5rem 1.5rem;
-
+    background: linear-gradient(to right, pink, #FFA07A, #fa9874);
+    color: white;
   }
-.btn-search{
-  background: linear-gradient(to right, pink, #FFA07A, #fa9874);
-  color: white;
-}
 
   @media (max-width: 768px) {
     .searchinput {
-        
       width: 150px;
     }
     .searchinput:focus {
       width: 200px;
     }
   }
-/* For buttons like .cta-button, .host-btn, and the search button */
-/* For buttons like .cta-button, .host-btn, and the search button */
-.host-activity {
-  width:15rem;
-  background: linear-gradient(to right, pink , #FFA07A, #fa9874); /* Light Salmon to Coral */
-  /* If you want even lighter: */
-  /* background: linear-gradient(to right, #FFDAB9, #FFB6C1); */ /* Peach Puff to Light Pink */
-  color: white !important; /* Keep text white for contrast */
-  padding: 0.8rem 2rem;
-  text-align: center;
-  border-radius: 2rem;
-  text-decoration: none;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(255, 160, 122, 0.4); /* Softer shadow matching the gradient */
-  margin-right: 1rem;
-}
 
+  .host-activity {
+    width: 15rem;
+    background: linear-gradient(to right, pink, #FFA07A, #fa9874);
+    color: white !important;
+    padding: 0.8rem 2rem;
+    text-align: center;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 160, 122, 0.4);
+    margin-right: 1rem;
+  }
 
+  /* --- NEW STYLES FOR BEAUTIFUL USER DROPDOWN --- */
+  :root {
+    --accent-color: #ff9800; /* Light Orange/Gold for accents */
+    --text-color: #343a40; /* Dark Grey */
+    --bg-light: #f8f9fa; /* Light Background */
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 
+  .user-menu-wrapper {
+    position: relative;
+    cursor: pointer;
+    /* margin-right: 1.5rem; /* Removed due to ms-auto in HTML */
+    margin-left: 1rem;
+  }
+
+  /* Profile Icon/Placeholder */
+  .profile-avatar {
+      width: 32px;
+      height: 32px;
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-right: 0.5rem;
+  }
+
+  .user-menu-trigger {
+    padding: 0.3rem 0.5rem 0.3rem 0.3rem; /* Compact padding */
+    border-radius: 30px;
+    background: white;
+    border: 1px solid #ddd;
+    color: var(--text-color);
+    font-size: 0.95rem; 
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .user-menu-trigger:hover {
+    background: var(--bg-light);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.2);
+  }
+
+  .user-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 130%; /* Position below the trigger */
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.6rem;
+    box-shadow: var(--shadow-light);
+    min-width: 220px;
+    z-index: 2000;
+    overflow: hidden;
+  }
+
+  .user-dropdown-content a {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+
+  .user-dropdown-content a span {
+    margin-right: 0.6rem;
+    font-size: 1.1rem; /* Icon size */
+  }
+
+  .user-dropdown-content a:hover {
+    background: var(--bg-light);
+    color: var(--accent-color);
+  }
+  /* --- END OF NEW STYLES --- */
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-   <img src="/logo.png" width="50" height="50" style="border-radius:50% ;">
+    <img src="/logo.png" width="50" height="50" style="border-radius:50%;">
 
-    <!-- <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -73,7 +144,6 @@
         <a class="nav-link" href="/listings">Explore</a>
       </div>
 
-      <!-- Search Form -->
       <div class="search ms-auto me-3">
         <form class="d-flex" role="search" action="/search" method="GET">
           <input class="form-control me-2 searchD searchinput" 
@@ -81,36 +151,61 @@
                  name="q" 
                  placeholder="Find your experience" 
                  aria-label="Search"/>
-          <button class="btn   searchD btn-search" type="submit">Search</button>
+          <button class="btn searchD btn-search" type="submit">Search</button>
         </form>
       </div>
 
-      <!-- <div class="navbar-nav ms-auto">
-<a class="nav-link host-activity" href="/listings/create" style="color: #fff;">Host an Activity</a>
-
-        <% if(!currUser) { %>
-          <a class="nav-link active" aria-current="page" href="/signup"><b>SignUp</b></a>
-          <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } %>
-        <% if(currUser) { %>
-          <a class="nav-link" href="/logout"><b>Logout</b></a>
-        <% } %>
-      </div> -->
-      <div class="navbar-nav ms-auto">
+      <div class="navbar-nav ms-auto d-flex align-items-center">
         <a class="nav-link host-activity" href="/listings/create" style="color: #fff;">Host an Activity</a>
-  <% if (!currUser) { %>
-    <a class="nav-link active" aria-current="page" href="/signup"><b>Sign Up</b></a>
-    <a class="nav-link" href="/login"><b>Login</b></a>
-  <% } else { %>
-    <div class="d-flex align-items-center me-3 px-3 py-1 rounded-pill" 
-         style="background: #f8f9fa; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-      <i class="fa-regular fa-user me-2"></i>
-      <span>Hello, <b><%= currUser.username %></b></span>
-    </div>
-    <a class="nav-link" href="/logout"><b>Logout</b></a>
-  <% } %>
-</div>
+
+        <% if (!currUser) { %>
+          <a class="nav-link active" aria-current="page" href="/signup"><b>Sign Up</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } else { %>
+          <div class="user-menu-wrapper" id="user-menu-wrapper">
+            <div class="user-menu-trigger">
+                <div class="profile-avatar">
+                  <%= currUser.username.charAt(0).toUpperCase() %>
+                </div>
+                <%= currUser.username %> 
+                <span style="margin-left: 8px;"></span>
+            </div>
+            
+            <div class="user-dropdown-content" id="user-dropdown-content">
+              <a href="/wishlist"> My Wishlist</a>
+              <a href="/calender"> My Calendar</a>
+              <a href="/profile"> My Profile</a>
+              <a href="/settings"> Settings</a>
+              <div style="height: 1px; background: #eee; margin: 0.4rem 0;"></div>
+              <a href="/logout">Logout</a>
+            </div>
+          </div>
+          <% } %>
+      </div>
 
     </div>
   </div>
 </nav>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const userMenuWrapper = document.getElementById("user-menu-wrapper");
+  const dropdownContent = document.getElementById("user-dropdown-content");
+
+  if (userMenuWrapper) {
+    userMenuWrapper.addEventListener("click", (e) => {
+      e.stopPropagation();
+      // Toggle display
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+
+    // Close dropdown when clicking anywhere else on the document
+    document.addEventListener("click", (e) => {
+      if (!userMenuWrapper.contains(e.target)) {
+        dropdownContent.style.display = "none";
+      }
+    });
+  }
+});
+</script>

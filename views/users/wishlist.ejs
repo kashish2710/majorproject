@@ -1,0 +1,237 @@
+<% layout('/layouts/boilerplate') -%>
+
+<style>
+    /* ------------------------------------------------------------------ */
+    /* 1. Global & Page Container Styles */
+    /* ------------------------------------------------------------------ */
+    .wishlist-container {
+        padding-top: 4rem; /* Thoda zyada padding */
+        padding-bottom: 5rem;
+    }
+    .wishlist-title {
+        color: #FF7043; /* Deep Coral/Peach */
+        font-weight: 800; /* Extra bold */
+        font-size: 2rem; /* Badi heading */
+        margin-bottom: 3rem;
+        /* Subtle, modern separator */
+        border-left: 5px solid #ffccbc; 
+        padding-left: 1rem;
+        display: inline-block;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 2. Listing Card Styles (The Sleek, Modern Look) */
+    /* ------------------------------------------------------------------ */
+    .listing-card {
+      border: 1px solid #f0f0f0; /* Very light border */
+      /* Premium, soft shadow */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06); 
+      border-radius: 1.5rem; /* Very smooth radius */
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      margin-bottom: 3.5rem;
+      position: relative;
+      background: white;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-8px); /* More noticeable lift effect */
+      box-shadow: 0 15px 40px rgba(255, 112, 67, 0.2); /* Peach glow on hover */
+    }
+    
+    .listing-card .listing_link {
+        text-decoration: none;
+        color: inherit; 
+    }
+
+    .listing-card .card-img-top {
+      height: 280px; 
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .listing-card:hover .card-img-top {
+        transform: scale(1.03); /* Image zoom on hover */
+    }
+    
+    .listing-card .card-body {
+        padding: 1.5rem 1.75rem;
+    }
+
+    .card-title { 
+        font-weight: 700; 
+        font-size: 1.45rem;
+        margin-bottom: 0.75rem;
+        color: #444; /* Darker text */
+    }
+    
+    .card-text {
+        font-size: 1rem;
+        color: #777; /* Softer text color */
+        line-height: 1.5;
+    }
+    
+    .card-text strong {
+        font-size: 1.2rem;
+        color: #FF7043; /* Price in Peach theme color */
+        font-weight: 700;
+    }
+    
+    .rating {
+      color: #FFC107; 
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .location {
+        color: #555;
+        font-size: 0.9rem;
+        display: block;
+        margin-top: 0.25rem;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 3. "X" Remove Button Styles (Clear & Themed) */
+    /* ------------------------------------------------------------------ */
+    .remove-btn {
+        background: #fff; /* White background */
+        border: 2px solid #ffccbc; /* Light peach border */
+        font-size: 1.1rem; 
+        cursor: pointer;
+        position: absolute;
+        top: 20px; /* Thoda niche */
+        right: 20px;
+        z-index: 20;
+        width: 40px; /* Bada button */
+        height: 40px;
+        border-radius: 50%; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .remove-btn i {
+        color: #FF7043; /* Icon color: Deep Coral/Peach */
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .remove-btn:hover {
+        transform: scale(1.1); 
+        background: #FF7043; /* Button background becomes peach */
+        border-color: #FF7043;
+    }
+    
+    .remove-btn:hover i {
+        color: white; /* Icon becomes white */
+        transform: rotate(90deg); /* Clearer animation on remove */
+    }
+    
+    /* ------------------------------------------------------------------ */
+    /* 4. Empty State Button */
+    /* ------------------------------------------------------------------ */
+    .cta-button { 
+      background: linear-gradient(to right, #ffab91, #FF7043); 
+      color: white !important;
+      padding: 1rem 2.5rem;
+      border-radius: 50px; 
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .alert-info {
+        border-radius: 1.5rem;
+        padding: 4rem;
+        margin-top: 4rem;
+        background-color: #fff8f5; 
+        border: 2px solid #ffccbc;
+    }
+    .alert-heading {
+        color: #e65100;
+        font-weight: 700;
+    }
+</style>
+
+<div class="container wishlist-container">
+    <h1 class="wishlist-title"> My Saved Activities (<%= wishlistedItems.length %>)</h1>
+
+    <% if (wishlistedItems && wishlistedItems.length > 0) { %>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+            <% for(listing of wishlistedItems){%>
+                <div class="col">
+                    <div class="card listing-card">
+                        
+                        <form method="POST" action="/wishlist/<%= listing._id %>" class="wishlist-remove-form">
+                            <button type="submit" class="remove-btn" title="Remove from Wishlist">
+                                <i class="fa-solid fa-xmark"></i> 
+                            </button>
+                        </form>
+                        
+                        <a href="/listings/<%=listing._id%>" class="listing_link">
+                            <img src="<%=listing.image.url %>" class="card-img-top" alt="<%= listing.title %> image">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= listing.title %></h5>
+                                <p class="card-text">
+                                    <span class="rating">&#9733; <%= listing.avgRating || 'New' %></span>
+                                    <br>
+                                    <strong>₹<%= listing.price.toLocaleString("en-IN") %></strong> per person
+                                    <br>
+                                    <span class="location"><%= listing.location %>, <%= listing.country %></span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+    <% } else { %>
+        <div class="alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">Your Wishlist is Empty! 😞</h4>
+            <p>Looks like you haven't saved any activities yet. Start exploring and find your next adventure!</p>
+            <hr>
+            <a href="/listings" class="btn cta-button">Explore Activities</a>
+        </div>
+    <% } %>
+</div>
+
+<script>
+    document.querySelectorAll('.wishlist-remove-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!confirm("Are you sure you want to remove this item from your wishlist?")) {
+                return;
+            }
+
+            const response = await fetch(e.target.action, {
+                method: 'POST' 
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (!data.saved) {
+                    const removedCol = e.target.closest('.col');
+                    if (removedCol) {
+                        removedCol.remove(); 
+                    }
+                    
+                    const title = document.querySelector('.wishlist-title');
+                    const match = title.textContent.match(/\((\d+)\)/);
+                    if (match) {
+                        const currentCount = parseInt(match[1]);
+                        const newCount = currentCount - 1;
+                        title.innerHTML = title.innerHTML.replace(`(${currentCount})`, `(${newCount})`);
+                        
+                        if (newCount === 0) {
+                             // Reload to show the empty state message
+                             window.location.reload(); 
+                        }
+                    }
+                } else {
+                    alert("Error: Item was not removed successfully.");
+                }
+            } else {
+                alert("An error occurred during removal.");
+            }
+        });
+    });
+</script>

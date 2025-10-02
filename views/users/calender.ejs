@@ -1,0 +1,125 @@
+<% layout('/layouts/boilerplate') -%>
+
+<style>
+    /* ------------------------------------------------------------------ */
+    /* Page Header Styling (Peach Theme) */
+    /* ------------------------------------------------------------------ */
+    .calendar-header {
+        color: #FF7043; 
+        font-weight: 800; 
+        font-size: 2rem; 
+        margin-bottom: 3rem;
+        border-left: 5px solid #ffccbc; 
+        padding-left: 1rem;
+    }
+
+    /* FullCalendar Container Styling */
+    #calendar {
+        background-color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    
+    /* Calendar Event Styling: Bookings (Peach) */
+    .fc-event[style*="#FF7043"] {
+        background-color: #FF7043;
+        border-color: #e64a19;
+        color: white;
+    }
+    
+    /* Calendar Event Styling: Hosted Events (Secondary Color - Purple/Blue) */
+    .fc-event[style*="#5e35b1"] {
+        background-color: #5e35b1;
+        border-color: #4527a0;
+        color: white;
+    }
+
+    .fc-event {
+        border-radius: 4px;
+        font-size: 0.8rem;
+        padding: 2px 5px;
+        cursor: pointer;
+    }
+    
+    /* Customizing the header buttons */
+    .fc .fc-button-primary {
+        background-color: #ff7043 !important; /* Peach background */
+        border-color: #ff7043 !important;
+        transition: background-color 0.3s;
+    }
+
+    .fc .fc-button-primary:hover {
+        background-color: #e64a19 !important; /* Darker peach on hover */
+        border-color: #e64a19 !important;
+    }
+    .legend-item {
+        margin-right: 20px;
+        font-weight: 600;
+        color: #555;
+    }
+    .legend-box {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+</style>
+
+<div class="container my-5">
+    <h1 class="calendar-header"> My Activity Calendar</h1>
+    
+    <div class="mb-4 d-flex">
+        <div class="legend-item">
+            <span class="legend-box" style="background-color: #FF7043;"></span> My Bookings
+        </div>
+        <div class="legend-item">
+            <span class="legend-box" style="background-color: #5e35b1;"></span> Hosted Events
+        </div>
+    </div>
+    
+    <div id='calendar'></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        
+        // FullCalendar initialization
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            // Configuration
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            
+            // Events Source
+            events: '/mycalendar/events', // Data is fetched from your JSON route
+            
+            // Customization
+            eventClick: function(info) {
+                // Navigate to the details page
+                if (info.event.url) {
+                    info.jsEvent.preventDefault(); 
+                    window.open(info.event.url, '_self'); 
+                }
+            },
+            
+            // Time and Display
+            eventTimeFormat: { 
+                hour: 'numeric',
+                minute: '2-digit',
+                meridiem: 'short'
+            },
+            
+            // Localization (Optional, for better user experience)
+            // locale: 'en' // Set language if needed
+        });
+
+        calendar.render();
+    });
+</script>
