@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
-  },
+  "start": "node app.js",
+  "dev": "nodemon app.js"
+},
   "dependencies": {
     "@fluidjs/multer-cloudinary": "^1.0.4",
     "axios": "^1.12.2",
